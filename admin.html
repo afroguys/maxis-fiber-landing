@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Maxis Fibre Landing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#FFC200;--primary-ink:#0B0D12;--bg:#0B0D12;--surface:#12161F;--card:#161B26;--text:#F5F7FA;--muted:#98A2B3;--border:rgba(255,255,255,.09);--ok:#22c55e;--warn:#f59e0b;--err:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+/* ---- login ---- */
+.login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:44px 40px;width:100%;max-width:400px;text-align:center;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+.login-logo{width:54px;height:54px;border-radius:14px;background:var(--primary);color:var(--primary-ink);font-size:28px;font-weight:900;display:grid;place-items:center;margin:0 auto 18px}
+.login-card h1{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.login-card p{color:var(--muted);font-size:.88rem;margin-bottom:26px}
+.login-card input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:inherit;font-size:1rem;padding:13px 15px;outline:none;margin-bottom:14px}
+.login-card input:focus{border-color:var(--primary)}
+.login-card .btn{width:100%}
+.login-err{color:var(--err);font-size:.85rem;margin-top:10px;display:none}
+/* ---- layout ---- */
+.admin{display:none}
+.admin.show{display:flex;min-height:100vh}
+.sidebar{width:248px;flex:none;background:var(--surface);border-right:1px solid var(--border);padding:22px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.sb-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.02rem;padding:4px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.sb-brand .logo{width:30px;height:30px;border-radius:9px;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-weight:900;font-size:15px}
+.sb-nav{display:flex;flex-direction:column;gap:3px;flex:1}
+.sb-nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:.9rem;font-weight:600;color:var(--muted);transition:.2s;cursor:pointer;border:none;background:none;font-family:inherit;text-align:left;width:100%}
+.sb-nav a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.sb-nav a.active{color:var(--primary);background:rgba(255,194,0,.1)}
+.sb-nav svg{width:17px;height:17px;flex:none}
+.sb-foot{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.sb-foot button{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text)}
+.sb-foot button:hover{border-color:var(--primary);color:var(--primary)}
+.sb-foot .danger:hover{border-color:var(--err);color:var(--err)}
+.sb-foot svg{width:15px;height:15px}
+.main{flex:1;padding:30px 36px 80px;max-width:980px}
+.main-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.main-head h1{font-size:1.55rem;font-weight:800;letter-spacing:-.02em}
+.main-head .hint{font-size:.82rem;color:var(--muted)}
+/* ---- cards ---- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 22px;border-bottom:1px solid var(--border)}
+.card-head h2{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:10px}
+.card-head svg{width:17px;height:17px;stroke:var(--primary)}
+.card-body{padding:22px}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin-bottom:7px;letter-spacing:.01em}
+.field input[type=text],.field input[type=tel],.field input[type=email],.field input[type=number],.field textarea,.field select{width:100%;background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:.95rem;padding:11px 13px;outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--primary)}
+.field textarea{resize:vertical;min-height:84px;line-height:1.5}
+.field .help{font-size:.76rem;color:var(--muted);margin-top:5px}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+/* ---- badges & buttons ---- */
+.badge{font-size:.72rem;font-weight:800;letter-spacing:.06em;padding:5px 11px;border-radius:999px}
+.badge-saved{color:var(--ok);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)}
+.badge-unsaved{color:var(--warn);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:.9rem;border-radius:10px;padding:11px 22px;transition:.2s}
+.btn-primary{background:var(--primary);color:var(--primary-ink)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary)}
+.btn-sm{padding:7px 14px;font-size:.82rem}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--err);border:1px solid rgba(239,68,68,.3)}
+.btn-danger:hover{background:rgba(239,68,68,.22)}
+.toast{position:fixed;bottom:26px;right:26px;background:#1a2130;border:1px solid var(--border);color:var(--text);padding:13px 20px;border-radius:12px;font-size:.9rem;font-weight:600;box-shadow:0 20px 50px -12px rgba(0,0,0,.7);opacity:0;transform:translateY(12px);transition:.3s;pointer-events:none;z-index:99}
+.toast.show{opacity:1;transform:none}
+/* ---- dynamic items ---- */
+.item-row{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;position:relative}
+.item-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.item-title{font-size:.88rem;font-weight:800;color:var(--primary)}
+.item-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.05rem;padding:4px 8px;border-radius:8px;transition:.2s}
+.item-del:hover{color:var(--err);background:rgba(239,68,68,.12)}
+.add-btn{display:inline-flex;align-items:center;gap:7px;background:none;border:1px dashed var(--border);color:var(--muted);font-family:inherit;font-weight:600;font-size:.88rem;padding:11px 18px;border-radius:11px;cursor:pointer;transition:.2s;width:100%;justify-content:center}
+.add-btn:hover{color:var(--primary);border-color:var(--primary)}
+.add-btn svg{width:16px;height:16px;stroke:currentColor}
+.hidden{display:none}
+/* responsive */
+@media(max-width:860px){
+  .admin.show{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px;padding:14px}
+  .sb-brand{border-bottom:none;padding:0;margin:0 8px 0 0}
+  .sb-nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .sb-nav a{width:auto;padding:8px 12px;font-size:.82rem}
+  .sb-foot{flex-direction:row;margin:0;padding:0;border:none}
+  .main{padding:22px 16px 60px}
+  .row-2,.row-3,.row-4{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">M</div>
+    <h1>Maxis Fibre Admin</h1>
+    <p>Enter the admin password to manage your landing page content.</p>
+    <input type="password" id="pwInput" placeholder="Admin password" autocomplete="current-password">
+    <button class="btn btn-primary" id="pwBtn">Unlock Dashboard</button>
+    <div class="login-err" id="loginErr">Wrong password. Please try again.</div>
+  </div>
+</div>
+
+<!-- ============ ADMIN ============ -->
+<div class="admin" id="admin">
+
+  <aside class="sidebar">
+    <div class="sb-brand"><span class="logo">M</span> Maxis Fibre</div>
+    <nav class="sb-nav" id="sbNav">
+      <a data-sec="general" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>General</a>
+      <a data-sec="hero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>Hero</a>
+      <a data-sec="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Stats</a>
+      <a data-sec="plans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Plans</a>
+      <a data-sec="benefits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>Benefits</a>
+      <a data-sec="steps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-2v6"/></svg>How It Works</a>
+      <a data-sec="faq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 9h6M9 13h4"/></svg>FAQ</a>
+      <a data-sec="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>CTA Band</a>
+      <a data-sec="footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h18M18 18v-4"/></svg>Footer</a>
+      <a data-sec="colors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>Colors</a>
+    </nav>
+    <div class="sb-foot">
+      <button onclick="previewSite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>Preview Site</button>
+      <button onclick="exportJson()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export Backup</button>
+      <button onclick="document.getElementById('importFile').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>Import Backup</button>
+      <button class="danger" onclick="resetAll()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Reset to Defaults</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-head">
+      <div>
+        <h1>Landing Page Content</h1>
+        <div class="hint">Edit content — click Save on each card. Changes appear on the landing page instantly (open <b>index.html</b> in the same browser).</div>
+      </div>
+      <a class="btn btn-primary" href="index.html" target="_blank">Open Landing Page ↗</a>
+    </div>
+
+    <!-- ===== GENERAL ===== -->
+    <section class="card" id="sec-general">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>General & Contact</h2><span class="badge badge-saved" id="badge-general">Disimpan</span></div>
+      <div class="card-body">
+        <div class="row-2">
+          <div class="field"><label>Brand name</label><input type="text" id="genBrand" oninput="markUnsaved('general')"></div>
+          <div class="field"><label>Brand subtitle (navbar)</label><input type="text" id="genBrandSub" oninput="markUnsaved('general')"></div>
+        </div>
+        <div class="row-2">
+          <div class="field"><label>WhatsApp number (no +, e.g. 60123456789)</label><input type="tel" id="genWa" oninput="markUnsaved('general')"><div class="help">All Apply buttons & WhatsApp links use this number.</div></div>
+          <div class="field"><label>Default WhatsApp message</label><input type="text" id="genWaMsg" oninput="markUnsaved('general')"></div>
+        </div>
+        <div class="row-2">
+          <div class="field"><label>Phone shown in footer</label><input type="text" id="genPhone" oninput="markUnsaved('general')"></div>
+          <div class="field"><label>Email shown in footer</label><input type="email" id="genEmail" oninput="markUnsaved('general')"></div>
+        </div>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('general')">Save General</button></div>
+      </div>
+    </section>
+
+    <!-- ===== HERO ===== -->
+    <section class="card hidden" id="sec-hero">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>Hero Section</h2><span class="badge badge-saved" id="badge-hero">Disimpan</span></div>
+      <div class="card-body">
+        <div class="field"><label>Badge (top pill)</label><input type="text" id="heroBadge" oninput="markUnsaved('hero')"></div>
+        <div class="field"><label>Headline (H1) — HTML allowed: wrap words in &lt;span class="hl"&gt;…&lt;/span&gt; for yellow highlight</label><input type="text" id="heroTitle" oninput="markUnsaved('hero')"></div>
+        <div class="field"><label>Subheadline</label><textarea id="heroSub" oninput="markUnsaved('hero')"></textarea></div>
+        <div class="row-2">
+          <div class="field"><label>Primary CTA text</label><input type="text" id="heroCta1" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Secondary CTA text (WhatsApp)</label><input type="text" id="heroCta2" oninput="markUnsaved('hero')"></div>
+        </div>
+        <div class="field"><label>Trust items (comma-separated)</label><input type="text" id="heroTrust" oninput="markUnsaved('hero')" placeholder="No paperwork, Free installation, 24/7 support"><div class="help">Shown as checkmarks under the CTAs.</div></div>
+        <div class="row-3">
+          <div class="field"><label>Gauge label</label><input type="text" id="heroGaugeLabel" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Gauge number</label><input type="text" id="heroGaugeNum" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Gauge unit text</label><input type="text" id="heroGaugeUnit" oninput="markUnsaved('hero')"></div>
+        </div>
+        <div class="row-3">
+          <div class="field"><label>Chip 1</label><input type="text" id="heroChip1" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Chip 2</label><input type="text" id="heroChip2" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Chip 3</label><input type="text" id="heroChip3" oninput="markUnsaved('hero')"></div>
+        </div>
+        <div class="row-3">
+          <div class="field"><label>Mini plan name</label><input type="text" id="heroMpName" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Mini plan sub</label><input type="text" id="heroMpSub" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Mini plan price</label><input type="text" id="heroMpPrice" oninput="markUnsaved('hero')"></div>
+        </div>
+        <div class="row-2">
+          <div class="field"><label>Float card title</label><input type="text" id="heroFcTitle" oninput="markUnsaved('hero')"></div>
+          <div class="field"><label>Float card sub</label><input type="text" id="heroFcSub" oninput="markUnsaved('hero')"></div>
+        </div>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('hero')">Save Hero</button></div>
+      </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="card hidden" id="sec-stats">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Stats Strip</h2><span class="badge badge-saved" id="badge-stats">Disimpan</span></div>
+      <div class="card-body">
+        <div id="statsList"></div>
+        <button class="add-btn" onclick="addStat()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Stat</button>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('stats')">Save Stats</button></div>
+      </div>
+    </section>
+
+    <!-- ===== PLANS ===== -->
+    <section class="card hidden" id="sec-plans">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Plans & Pricing</h2><span class="badge badge-saved" id="badge-plans">Disimpan</span></div>
+      <div class="card-body">
+        <div id="plansList"></div>
+        <button class="add-btn" onclick="addPlan()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Plan</button>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('plans')">Save Plans</button></div>
+      </div>
+    </section>
+
+    <!-- ===== BENEFITS ===== -->
+    <section class="card hidden" id="sec-benefits">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>Benefits (Why Maxis)</h2><span class="badge badge-saved" id="badge-benefits">Disimpan</span></div>
+      <div class="card-body">
+        <div id="benefitsList"></div>
+        <button class="add-btn" onclick="addBenefit()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Benefit</button>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('benefits')">Save Benefits</button></div>
+      </div>
+    </section>
+
+    <!-- ===== STEPS ===== -->
+    <section class="card hidden" id="sec-steps">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-2v6"/></svg>How It Works (Steps)</h2><span class="badge badge-saved" id="badge-steps">Disimpan</span></div>
+      <div class="card-body">
+        <div id="stepsList"></div>
+        <button class="add-btn" onclick="addStep()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Step</button>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('steps')">Save Steps</button></div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="card hidden" id="sec-faq">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 9h6M9 13h4"/></svg>FAQ</h2><span class="badge badge-saved" id="badge-faq">Disimpan</span></div>
+      <div class="card-body">
+        <div id="faqList"></div>
+        <button class="add-btn" onclick="addFaq()"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Question</button>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('faq')">Save FAQ</button></div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="card hidden" id="sec-cta">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>CTA Band & Lead Form</h2><span class="badge badge-saved" id="badge-cta">Disimpan</span></div>
+      <div class="card-body">
+        <div class="field"><label>Title</label><input type="text" id="ctaTitle" oninput="markUnsaved('cta')"></div>
+        <div class="field"><label>Subtitle</label><textarea id="ctaSub" oninput="markUnsaved('cta')"></textarea></div>
+        <div class="row-2">
+          <div class="field"><label>Form title</label><input type="text" id="ctaFormTitle" oninput="markUnsaved('cta')"></div>
+          <div class="field"><label>Button text</label><input type="text" id="ctaButton" oninput="markUnsaved('cta')"></div>
+        </div>
+        <div class="row-3">
+          <div class="field"><label>Name label</label><input type="text" id="ctaNameLabel" oninput="markUnsaved('cta')"></div>
+          <div class="field"><label>Phone label</label><input type="text" id="ctaPhoneLabel" oninput="markUnsaved('cta')"></div>
+          <div class="field"><label>Plan label</label><input type="text" id="ctaPlanLabel" oninput="markUnsaved('cta')"></div>
+        </div>
+        <div class="field"><label>Form note (small text under button)</label><input type="text" id="ctaNote" oninput="markUnsaved('cta')"></div>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('cta')">Save CTA Band</button></div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <section class="card hidden" id="sec-footer">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 6h18M3 14h12M3 18h18M18 18v-4"/></svg>Footer</h2><span class="badge badge-saved" id="badge-footer">Disimpan</span></div>
+      <div class="card-body">
+        <div class="field"><label>Tagline</label><input type="text" id="footTag" oninput="markUnsaved('footer')"></div>
+        <div class="field"><label>Legal disclaimer</label><textarea id="footDisclaimer" oninput="markUnsaved('footer')"></textarea></div>
+        <div class="field"><label>Copyright text</label><input type="text" id="footCopy" oninput="markUnsaved('footer')"></div>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('footer')">Save Footer</button></div>
+      </div>
+    </section>
+
+    <!-- ===== COLORS ===== -->
+    <section class="card hidden" id="sec-colors">
+      <div class="card-head"><h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>Colors & Style</h2><span class="badge badge-saved" id="badge-colors">Disimpan</span></div>
+      <div class="card-body">
+        <div class="row-3">
+          <div class="field"><label>Primary (CTA) color</label><input type="color" id="colPrimary" value="#FFC200" oninput="syncColor('colPrimary');markUnsaved('colors')"><input type="text" id="colPrimaryTxt" value="#FFC200" oninput="syncColorTxt('colPrimary');markUnsaved('colors')" style="margin-top:6px"></div>
+          <div class="field"><label>Primary text (on CTA)</label><input type="color" id="colPrimaryInk" value="#0B0D12" oninput="syncColor('colPrimaryInk');markUnsaved('colors')"><input type="text" id="colPrimaryInkTxt" value="#0B0D12" oninput="syncColorTxt('colPrimaryInk');markUnsaved('colors')" style="margin-top:6px"></div>
+          <div class="field"><label>Background</label><input type="color" id="colBg" value="#07090F" oninput="syncColor('colBg');markUnsaved('colors')"><input type="text" id="colBgTxt" value="#07090F" oninput="syncColorTxt('colBg');markUnsaved('colors')" style="margin-top:6px"></div>
+        </div>
+        <div class="row-3">
+          <div class="field"><label>Card surface</label><input type="color" id="colSurface" value="#0F1420" oninput="syncColor('colSurface');markUnsaved('colors')"><input type="text" id="colSurfaceTxt" value="#0F1420" oninput="syncColorTxt('colSurface');markUnsaved('colors')" style="margin-top:6px"></div>
+          <div class="field"><label>Text color</label><input type="color" id="colText" value="#F5F7FA" oninput="syncColor('colText');markUnsaved('colors')"><input type="text" id="colTextTxt" value="#F5F7FA" oninput="syncColorTxt('colText');markUnsaved('colors')" style="margin-top:6px"></div>
+          <div class="field"><label>Muted text</label><input type="color" id="colMuted" value="#98A2B3" oninput="syncColor('colMuted');markUnsaved('colors')"><input type="text" id="colMutedTxt" value="#98A2B3" oninput="syncColorTxt('colMuted');markUnsaved('colors')" style="margin-top:6px"></div>
+        </div>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveSection('colors')">Save Colors</button></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<input type="file" id="importFile" accept=".json" class="hidden" onchange="importJson(event)">
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= CONFIG ================= */
+var ADMIN_PASSWORD = 'admin123'; /* <-- TUKAR PASSWORD DI SINI */
+var DB_KEY = 'maxis_fiber_db_v1';
+
+/* ================= DEFAULT DB (must mirror index.html) ================= */
+var DEFAULT_DB = {
+  settings: {
+    brand: 'Maxis Fibre', brandSub: '· Home Plans', waNumber: '60123456789',
+    waMessage: 'Hi! I want to apply for Maxis Fibre.',
+    phoneDisplay: '+60 12-345 6789', email: 'hello@example.com'
+  },
+  hero: {
+    badge: 'Limited-time promo — from RM89/month',
+    title: 'Superfast home fibre. <span class="hl">From RM89/month.</span>',
+    subtitle: 'Unlimited quota, free installation and a free router — get Maxis Home Fibre in minutes. You apply, we do the rest.',
+    ctaPrimary: 'Apply Now', ctaSecondary: 'Chat on WhatsApp',
+    trust: ['No paperwork', 'Free installation', '24/7 support'],
+    gaugeLabel: 'Live speed test', gaugeNum: '1 Gbps', gaugeUnit: 'Fibre download speed',
+    chip1: 'Unlimited quota', chip2: 'Free router', chip3: 'Free install',
+    mpName: '500Mbps Plan', mpSub: 'FREE 2× Mesh WiFi included', mpPrice: 'RM149',
+    fcTitle: 'Whole-home coverage', fcSub: 'Strong WiFi in every room'
+  },
+  stats: [
+    {value:'1 Gbps', label:'Top download speed'},
+    {value:'100%', label:'Unlimited quota'},
+    {value:'3 min', label:'Online application'},
+    {value:'24/7', label:'Maxis support'}
+  ],
+  plans: [
+    {name:'100Mbps', tagline:'Everyday browsing', price:'89', wasPrice:'99', contract:'24-month contract', discount:'Save RM10/mo for 24 months', features:['Unlimited quota','Free router','Free standard installation','Voice: pay-per-use'], badge:'', featured:false},
+    {name:'300Mbps', tagline:'Best value streaming', price:'99', wasPrice:'139', contract:'36-month contract', discount:'Save RM40/mo for 36 months', features:['Unlimited quota','Free router','Free standard installation','Voice: pay-per-use'], badge:'BEST VALUE', featured:true},
+    {name:'500Mbps', tagline:'Power for the whole home', price:'149', wasPrice:'159', contract:'24-month contract', discount:'3 months free + save RM10/mo', features:['Unlimited quota','FREE 2× Mesh WiFi','Free router','Free standard installation'], badge:'MOST POPULAR', featured:true}
+  ],
+  benefits: [
+    {icon:'zap', title:'Superfast speeds', desc:'Up to 1Gbps download — stream, game and work from home without lag.'},
+    {icon:'infinity', title:'Unlimited quota', desc:'No data caps, no throttling surprises. Use it as much as you want.'},
+    {icon:'wrench', title:'Free installation', desc:'Standard installation is free. Our team handles everything for you.'},
+    {icon:'wifi', title:'Free router + Mesh', desc:'Free router on every plan; 2× Mesh WiFi units on the 500Mbps plan.'},
+    {icon:'phone', title:'Postpaid discount', desc:'Existing Maxis postpaid users save even more — up to RM90/month.'},
+    {icon:'shield', title:'Trusted network', desc:'Backed by Maxis — one of Malaysia’s most reliable fibre networks.'}
+  ],
+  steps: [
+    {title:'Apply online', desc:'Fill in the form or WhatsApp us your details. Takes under 3 minutes.'},
+    {title:'We verify & confirm', desc:'Our team checks coverage and confirms your plan and installation slot.'},
+    {title:'Get connected', desc:'Maxis installs your fibre. Start streaming the same week.'}
+  ],
+  faqs: [
+    {q:'Is there a contract?', a:'Yes — home fibre plans come with a 24- or 36-month contract. Promotional pricing applies for the full contract period.'},
+    {q:'What is the early termination penalty?', a:'Early termination is charged at the original monthly fee × remaining months, or RM500 — whichever is higher.'},
+    {q:'Is installation really free?', a:'Yes, standard installation is free on all residential plans. Non-standard work may be quoted separately.'},
+    {q:'I’m a Maxis postpaid user. Can I save more?', a:'Yes — Maxis postpaid customers enjoy extra discounts, up to RM90/month on the 1Gbps plan.'},
+    {q:'Is a phone line included?', a:'Plans are available with pay-per-use voice or an unlimited domestic call line add-on at a small monthly top-up.'},
+    {q:'How fast can I get connected?', a:'Once coverage is confirmed, installation is usually scheduled within 1–3 working days.'}
+  ],
+  cta: {
+    title: 'Ready to supercharge your internet?',
+    subtitle: 'Leave your details and our team will confirm coverage and finalise your application — usually within the hour.',
+    formTitle: 'Apply for Maxis Fibre', nameLabel: 'Full name', phoneLabel: 'Mobile number', planLabel: 'Choose plan',
+    button: 'Apply Now via WhatsApp',
+    note: 'No payment needed now. We will contact you to confirm.'
+  },
+  footer: {
+    tagline: 'Superfast Maxis Fibre for your home — applied online, installed fast.',
+    disclaimer: 'Maxis, Maxis Fibre and related marks are trademarks of Maxis Broadband Sdn. Bhd. All plans, prices and promotions are subject to Maxis’ terms and conditions and may change without notice. This site is an independent application portal; final approval is at Maxis’ discretion.',
+    copyright: 'Maxis Fibre Landing'
+  },
+  colors: {
+    primary:'#FFC200', primaryInk:'#0B0D12', bg:'#07090F', surface:'#0F1420',
+    text:'#F5F7FA', muted:'#98A2B3', border:'rgba(255,255,255,0.08)'
+  }
+};
+
+function getDB(){
+  try{ var s = JSON.parse(localStorage.getItem(DB_KEY));
+    if(s && s.settings) return s;
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_DB));
+}
+function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+
+/* ================= LOGIN ================= */
+document.getElementById('pwBtn').addEventListener('click', tryLogin);
+document.getElementById('pwInput').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryLogin(); });
+function tryLogin(){
+  if(document.getElementById('pwInput').value === ADMIN_PASSWORD){
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('admin').classList.add('show');
+    loadAll();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+
+/* ================= BADGES ================= */
+function markUnsaved(sec){
+  var b = document.getElementById('badge-' + sec);
+  if(b){ b.textContent = 'Belum Simpan'; b.className = 'badge badge-unsaved'; }
+}
+function markSaved(sec){
+  var b = document.getElementById('badge-' + sec);
+  if(b){ b.textContent = 'Disimpan'; b.className = 'badge badge-saved'; }
+}
+
+/* ================= SIDEBAR ================= */
+document.getElementById('sbNav').addEventListener('click', function(e){
+  var a = e.target.closest('a[data-sec]');
+  if(!a) return;
+  document.querySelectorAll('#sbNav a').forEach(function(x){ x.classList.remove('active'); });
+  a.classList.add('active');
+  document.querySelectorAll('.main > .card').forEach(function(c){ c.classList.add('hidden'); });
+  document.getElementById('sec-' + a.dataset.sec).classList.remove('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ================= TOAST ================= */
+var toastTimer;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+
+/* ================= LOAD ALL SECTIONS ================= */
+function loadAll(){
+  var db = getDB();
+  /* general */
+  document.getElementById('genBrand').value = db.settings.brand;
+  document.getElementById('genBrandSub').value = db.settings.brandSub || '';
+  document.getElementById('genWa').value = db.settings.waNumber;
+  document.getElementById('genWaMsg').value = db.settings.waMessage;
+  document.getElementById('genPhone').value = db.settings.phoneDisplay;
+  document.getElementById('genEmail').value = db.settings.email;
+  /* hero */
+  document.getElementById('heroBadge').value = db.hero.badge;
+  document.getElementById('heroTitle').value = db.hero.title;
+  document.getElementById('heroSub').value = db.hero.subtitle;
+  document.getElementById('heroCta1').value = db.hero.ctaPrimary;
+  document.getElementById('heroCta2').value = db.hero.ctaSecondary;
+  document.getElementById('heroTrust').value = (db.hero.trust||[]).join(', ');
+  document.getElementById('heroGaugeLabel').value = db.hero.gaugeLabel;
+  document.getElementById('heroGaugeNum').value = db.hero.gaugeNum;
+  document.getElementById('heroGaugeUnit').value = db.hero.gaugeUnit;
+  document.getElementById('heroChip1').value = db.hero.chip1;
+  document.getElementById('heroChip2').value = db.hero.chip2;
+  document.getElementById('heroChip3').value = db.hero.chip3;
+  document.getElementById('heroMpName').value = db.hero.mpName;
+  document.getElementById('heroMpSub').value = db.hero.mpSub;
+  document.getElementById('heroMpPrice').value = db.hero.mpPrice;
+  document.getElementById('heroFcTitle').value = db.hero.fcTitle;
+  document.getElementById('heroFcSub').value = db.hero.fcSub;
+  /* colors */
+  ['colPrimary','colPrimaryInk','colBg','colSurface','colText','colMuted'].forEach(function(id){
+    var v = db.colors[id.replace('col','').toLowerCase()] || db.colors[id] || '#ffffff';
+    var map = {colPrimary:'primary',colPrimaryInk:'primaryInk',colBg:'bg',colSurface:'surface',colText:'text',colMuted:'muted'};
+    var val = db.colors[map[id]];
+    document.getElementById(id).value = val;
+    document.getElementById(id + 'Txt').value = val;
+  });
+  /* lists */
+  window._stats = db.stats.slice(); renderStats();
+  window._plans = db.plans.slice(); renderPlans();
+  window._benefits = db.benefits.slice(); renderBenefits();
+  window._steps = db.steps.slice(); renderSteps();
+  window._faqs = db.faqs.slice(); renderFaqs();
+  /* cta */
+  document.getElementById('ctaTitle').value = db.cta.title;
+  document.getElementById('ctaSub').value = db.cta.subtitle;
+  document.getElementById('ctaFormTitle').value = db.cta.formTitle;
+  document.getElementById('ctaButton').value = db.cta.button;
+  document.getElementById('ctaNameLabel').value = db.cta.nameLabel;
+  document.getElementById('ctaPhoneLabel').value = db.cta.phoneLabel;
+  document.getElementById('ctaPlanLabel').value = db.cta.planLabel;
+  document.getElementById('ctaNote').value = db.cta.note;
+  /* footer */
+  document.getElementById('footTag').value = db.footer.tagline;
+  document.getElementById('footDisclaimer').value = db.footer.disclaimer;
+  document.getElementById('footCopy').value = db.footer.copyright;
+}
+
+/* ================= LIST RENDERERS ================= */
+function renderStats(){
+  document.getElementById('statsList').innerHTML = (window._stats||[]).map(function(s, i){
+    return '<div class="item-row"><div class="item-head"><span class="item-title">Stat ' + (i+1) + '</span><button class="item-del" onclick="removeStat(' + i + ')" title="Remove">✕</button></div>' +
+      '<div class="row-2">' +
+      '<div class="field"><label>Value</label><input type="text" value="' + esc(s.value) + '" oninput="window._stats[' + i + '].value=this.value;markUnsaved(\'stats\')"></div>' +
+      '<div class="field"><label>Label</label><input type="text" value="' + esc(s.label) + '" oninput="window._stats[' + i + '].label=this.value;markUnsaved(\'stats\')"></div>' +
+      '</div></div>';
+  }).join('');
+}
+function addStat(){ (window._stats = window._stats||[]).push({value:'New', label:'Stat label'}); renderStats(); markUnsaved('stats'); }
+function removeStat(i){ window._stats.splice(i,1); renderStats(); markUnsaved('stats'); }
+
+function renderPlans(){
+  document.getElementById('plansList').innerHTML = (window._plans||[]).map(function(p, i){
+    var feats = (p.features||[]).join('\n');
+    return '<div class="item-row"><div class="item-head"><span class="item-title">' + esc(p.name) + ' Plan</span><button class="item-del" onclick="removePlan(' + i + ')" title="Remove">✕</button></div>' +
+      '<div class="row-2">' +
+      '<div class="field"><label>Plan name</label><input type="text" value="' + esc(p.name) + '" oninput="window._plans[' + i + '].name=this.value;document.querySelector(\'#plansList .item-row:nth-child(' + (i+1) + ') .item-title\').textContent=this.value;markUnsaved(\'plans\')"></div>' +
+      '<div class="field"><label>Tagline</label><input type="text" value="' + esc(p.tagline) + '" oninput="window._plans[' + i + '].tagline=this.value;markUnsaved(\'plans\')"></div>' +
+      '</div>' +
+      '<div class="row-3">' +
+      '<div class="field"><label>Price (RM only)</label><input type="text" value="' + esc(p.price) + '" oninput="window._plans[' + i + '].price=this.value;markUnsaved(\'plans\')"></div>' +
+      '<div class="field"><label>Original price (RM)</label><input type="text" value="' + esc(p.wasPrice||'') + '" oninput="window._plans[' + i + '].wasPrice=this.value;markUnsaved(\'plans\')"></div>' +
+      '<div class="field"><label>Contract</label><input type="text" value="' + esc(p.contract) + '" oninput="window._plans[' + i + '].contract=this.value;markUnsaved(\'plans\')"></div>' +
+      '</div>' +
+      '<div class="row-2">' +
+      '<div class="field"><label>Discount / promo line</label><input type="text" value="' + esc(p.discount) + '" oninput="window._plans[' + i + '].discount=this.value;markUnsaved(\'plans\')"></div>' +
+      '<div class="field"><label>Badge (e.g. BEST VALUE — leave empty for none)</label><input type="text" value="' + esc(p.badge||'') + '" oninput="window._plans[' + i + '].badge=this.value;markUnsaved(\'plans\')"></div>' +
+      '</div>' +
+      '<div class="field"><label>Features (one per line)</label><textarea oninput="window._plans[' + i + '].features=this.value.split(\'\\n\').map(function(s){return s.trim()}).filter(Boolean);markUnsaved(\'plans\')">' + esc(feats) + '</textarea></div>' +
+      '<div class="field"><label><input type="checkbox" ' + (p.featured ? 'checked' : '') + ' onchange="window._plans[' + i + '].featured=this.checked;markUnsaved(\'plans\')"> Highlight card (yellow border + yellow CTA)</label></div>' +
+      '</div>';
+  }).join('');
+}
+function addPlan(){ (window._plans = window._plans||[]).push({name:'New Plan', tagline:'Plan tagline', price:'99', wasPrice:'', contract:'24-month contract', discount:'Save RM10/mo', features:['Unlimited quota','Free router'], badge:'', featured:false}); renderPlans(); markUnsaved('plans'); }
+function removePlan(i){ window._plans.splice(i,1); renderPlans(); markUnsaved('plans'); }
+
+function renderBenefits(){
+  document.getElementById('benefitsList').innerHTML = (window._benefits||[]).map(function(b, i){
+    return '<div class="item-row"><div class="item-head"><span class="item-title">Benefit ' + (i+1) + '</span><button class="item-del" onclick="removeBenefit(' + i + ')" title="Remove">✕</button></div>' +
+      '<div class="row-2">' +
+      '<div class="field"><label>Icon</label><select onchange="window._benefits[' + i + '].icon=this.value;markUnsaved(\'benefits\')">' +
+      ['zap','infinity','wrench','wifi','phone','shield','download','check'].map(function(ic){
+        return '<option value="' + ic + '"' + (b.icon === ic ? ' selected' : '') + '>' + ic + '</option>';
+      }).join('') + '</select></div>' +
+      '<div class="field"><label>Title</label><input type="text" value="' + esc(b.title) + '" oninput="window._benefits[' + i + '].title=this.value;markUnsaved(\'benefits\')"></div>' +
+      '</div>' +
+      '<div class="field"><label>Description</label><textarea oninput="window._benefits[' + i + '].desc=this.value;markUnsaved(\'benefits\')">' + esc(b.desc) + '</textarea></div>' +
+      '</div>';
+  }).join('');
+}
+function addBenefit(){ (window._benefits = window._benefits||[]).push({icon:'zap', title:'New benefit', desc:'Description here.'}); renderBenefits(); markUnsaved('benefits'); }
+function removeBenefit(i){ window._benefits.splice(i,1); renderBenefits(); markUnsaved('benefits'); }
+
+function renderSteps(){
+  document.getElementById('stepsList').innerHTML = (window._steps||[]).map(function(s, i){
+    return '<div class="item-row"><div class="item-head"><span class="item-title">Step ' + (i+1) + '</span><button class="item-del" onclick="removeStep(' + i + ')" title="Remove">✕</button></div>' +
+      '<div class="field"><label>Title</label><input type="text" value="' + esc(s.title) + '" oninput="window._steps[' + i + '].title=this.value;markUnsaved(\'steps\')"></div>' +
+      '<div class="field"><label>Description</label><textarea oninput="window._steps[' + i + '].desc=this.value;markUnsaved(\'steps\')">' + esc(s.desc) + '</textarea></div>' +
+      '</div>';
+  }).join('');
+}
+function addStep(){ (window._steps = window._steps||[]).push({title:'New step', desc:'Description here.'}); renderSteps(); markUnsaved('steps'); }
+function removeStep(i){ window._steps.splice(i,1); renderSteps(); markUnsaved('steps'); }
+
+function renderFaqs(){
+  document.getElementById('faqList').innerHTML = (window._faqs||[]).map(function(f, i){
+    return '<div class="item-row"><div class="item-head"><span class="item-title">Q' + (i+1) + '</span><button class="item-del" onclick="removeFaq(' + i + ')" title="Remove">✕</button></div>' +
+      '<div class="field"><label>Question</label><input type="text" value="' + esc(f.q) + '" oninput="window._faqs[' + i + '].q=this.value;markUnsaved(\'faq\')"></div>' +
+      '<div class="field"><label>Answer</label><textarea oninput="window._faqs[' + i + '].a=this.value;markUnsaved(\'faq\')">' + esc(f.a) + '</textarea></div>' +
+      '</div>';
+  }).join('');
+}
+function addFaq(){ (window._faqs = window._faqs||[]).push({q:'New question?', a:'Answer here.'}); renderFaqs(); markUnsaved('faq'); }
+function removeFaq(i){ window._faqs.splice(i,1); renderFaqs(); markUnsaved('faq'); }
+
+/* ================= SAVE ================= */
+function saveSection(sec){
+  var db = getDB();
+  switch(sec){
+    case 'general':
+      db.settings.brand = document.getElementById('genBrand').value;
+      db.settings.brandSub = document.getElementById('genBrandSub').value;
+      db.settings.waNumber = document.getElementById('genWa').value;
+      db.settings.waMessage = document.getElementById('genWaMsg').value;
+      db.settings.phoneDisplay = document.getElementById('genPhone').value;
+      db.settings.email = document.getElementById('genEmail').value;
+      break;
+    case 'hero':
+      db.hero.badge = document.getElementById('heroBadge').value;
+      db.hero.title = document.getElementById('heroTitle').value;
+      db.hero.subtitle = document.getElementById('heroSub').value;
+      db.hero.ctaPrimary = document.getElementById('heroCta1').value;
+      db.hero.ctaSecondary = document.getElementById('heroCta2').value;
+      db.hero.trust = document.getElementById('heroTrust').value.split(',').map(function(s){return s.trim()}).filter(Boolean);
+      db.hero.gaugeLabel = document.getElementById('heroGaugeLabel').value;
+      db.hero.gaugeNum = document.getElementById('heroGaugeNum').value;
+      db.hero.gaugeUnit = document.getElementById('heroGaugeUnit').value;
+      db.hero.chip1 = document.getElementById('heroChip1').value;
+      db.hero.chip2 = document.getElementById('heroChip2').value;
+      db.hero.chip3 = document.getElementById('heroChip3').value;
+      db.hero.mpName = document.getElementById('heroMpName').value;
+      db.hero.mpSub = document.getElementById('heroMpSub').value;
+      db.hero.mpPrice = document.getElementById('heroMpPrice').value;
+      db.hero.fcTitle = document.getElementById('heroFcTitle').value;
+      db.hero.fcSub = document.getElementById('heroFcSub').value;
+      break;
+    case 'stats': db.stats = (window._stats||[]).slice(); break;
+    case 'plans': db.plans = (window._plans||[]).slice(); break;
+    case 'benefits': db.benefits = (window._benefits||[]).slice(); break;
+    case 'steps': db.steps = (window._steps||[]).slice(); break;
+    case 'faq': db.faqs = (window._faqs||[]).slice(); break;
+    case 'cta':
+      db.cta.title = document.getElementById('ctaTitle').value;
+      db.cta.subtitle = document.getElementById('ctaSub').value;
+      db.cta.formTitle = document.getElementById('ctaFormTitle').value;
+      db.cta.button = document.getElementById('ctaButton').value;
+      db.cta.nameLabel = document.getElementById('ctaNameLabel').value;
+      db.cta.phoneLabel = document.getElementById('ctaPhoneLabel').value;
+      db.cta.planLabel = document.getElementById('ctaPlanLabel').value;
+      db.cta.note = document.getElementById('ctaNote').value;
+      break;
+    case 'footer':
+      db.footer.tagline = document.getElementById('footTag').value;
+      db.footer.disclaimer = document.getElementById('footDisclaimer').value;
+      db.footer.copyright = document.getElementById('footCopy').value;
+      break;
+    case 'colors':
+      db.colors.primary = document.getElementById('colPrimary').value;
+      db.colors.primaryInk = document.getElementById('colPrimaryInk').value;
+      db.colors.bg = document.getElementById('colBg').value;
+      db.colors.surface = document.getElementById('colSurface').value;
+      db.colors.text = document.getElementById('colText').value;
+      db.colors.muted = document.getElementById('colMuted').value;
+      break;
+  }
+  saveDB(db);
+  markSaved(sec);
+  toast('Saved ✓ — refresh the landing page to see changes');
+}
+
+/* ================= COLOR SYNC ================= */
+function syncColor(id){ document.getElementById(id + 'Txt').value = document.getElementById(id).value; }
+function syncColorTxt(id){
+  var v = document.getElementById(id + 'Txt').value;
+  if(/^#[0-9a-fA-F]{6}$/.test(v)) document.getElementById(id).value = v;
+}
+
+/* ================= EXPORT / IMPORT / RESET ================= */
+function exportJson(){
+  var db = getDB();
+  var blob = new Blob([JSON.stringify(db, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'maxis-fiber-backup.json';
+  a.click();
+  toast('Backup exported ✓');
+}
+function importJson(e){
+  var file = e.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    try{
+      var data = JSON.parse(reader.result);
+      if(!data.settings) throw new Error('bad file');
+      saveDB(data);
+      loadAll();
+      toast('Backup imported ✓');
+    }catch(err){ toast('Invalid backup file'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+function resetAll(){
+  if(!confirm('Reset ALL content back to defaults? This cannot be undone.')) return;
+  saveDB(JSON.parse(JSON.stringify(DEFAULT_DB)));
+  loadAll();
+  toast('Reset to defaults ✓');
+}
+function previewSite(){ window.open('index.html', '_blank'); }
+
+/* ================= ESC ================= */
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+</script>
+</body>
+</html>

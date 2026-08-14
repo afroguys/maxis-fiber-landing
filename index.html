@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maxis Fibre — Superfast Home Fibre from RM89/month</title>
+<meta name="description" content="Apply Maxis Home Fibre online. Up to 1Gbps, unlimited quota, free installation & free router. Plans from RM89/month. You apply — we do the rest.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#FFC200; --primary-ink:#0B0D12; --bg:#07090F; --surface:#0F1420;
+  --text:#F5F7FA; --muted:#98A2B3; --border:rgba(255,255,255,0.08);
+  --radius:18px; --shadow:0 24px 60px -20px rgba(0,0,0,0.55);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:1160px;margin:0 auto;padding:0 24px}
+.hl{color:var(--primary)}
+section{position:relative}
+.section-head{max-width:640px;margin:0 auto 56px;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);background:rgba(255,194,0,.09);border:1px solid rgba(255,194,0,.28);padding:7px 14px;border-radius:999px;margin-bottom:18px}
+.section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px}
+.section-head p{color:var(--muted);font-size:1.05rem}
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:1rem;border-radius:12px;padding:16px 30px;cursor:pointer;border:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease,color .2s ease;white-space:nowrap}
+.btn-primary{background:var(--primary);color:var(--primary-ink);box-shadow:0 12px 34px -8px rgba(255,194,0,.55)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 44px -8px rgba(255,194,0,.7)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px)}
+.btn-lg{padding:18px 36px;font-size:1.08rem}
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(7,9,15,.78);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-bottom-color:var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:1.12rem;letter-spacing:-.02em}
+.brand-badge{width:36px;height:36px;border-radius:10px;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-size:19px;font-weight:900}
+.nav-links{display:flex;gap:30px;font-size:.95rem;color:var(--muted);font-weight:500}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav .btn{padding:11px 22px;font-size:.92rem}
+/* ---------- Hero ---------- */
+.hero{padding:84px 0 72px;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(640px 420px at 12% -10%, rgba(255,194,0,.14), transparent 65%),
+    radial-gradient(760px 520px at 95% 20%, rgba(37,99,235,.16), transparent 65%),
+    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+  background-size:auto,auto,44px 44px,44px 44px;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 0%, #000 55%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 0%, #000 55%, transparent 100%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,194,0,.1);border:1px solid rgba(255,194,0,.3);color:var(--primary);font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px;margin-bottom:24px}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 0 rgba(255,194,0,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,194,0,.55)}70%{box-shadow:0 0 0 9px rgba(255,194,0,0)}100%{box-shadow:0 0 0 0 rgba(255,194,0,0)}}
+.hero h1{font-size:clamp(2.5rem,5.4vw,4.05rem);font-weight:900;letter-spacing:-.035em;line-height:1.06;margin-bottom:22px}
+.hero-sub{font-size:clamp(1.05rem,1.6vw,1.22rem);color:var(--muted);max-width:540px;margin-bottom:34px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+.hero-trust{display:flex;gap:22px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;font-weight:500}
+.hero-trust span{display:inline-flex;align-items:center;gap:7px}
+.hero-trust svg{width:16px;height:16px;stroke:var(--primary)}
+/* Hero visual */
+.hero-visual{position:relative}
+.gauge-card{background:linear-gradient(160deg,var(--surface),rgba(15,20,32,.55));border:1px solid var(--border);border-radius:26px;padding:36px 30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.gauge-card::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,194,0,.16),transparent 70%)}
+.gauge-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.gauge-label{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.gauge-live{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);padding:5px 11px;border-radius:999px}
+.gauge-live .dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.gauge-body{display:flex;align-items:center;gap:26px;margin:14px 0 6px}
+.gauge-num{font-size:clamp(2.4rem,4vw,3.1rem);font-weight:900;letter-spacing:-.04em;line-height:1}
+.gauge-unit{font-size:1rem;font-weight:700;color:var(--muted);margin-top:6px}
+.gauge-bars{flex:1;display:flex;flex-direction:column;gap:9px}
+.gbar{height:9px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;position:relative}
+.gbar i{position:absolute;inset:0;border-radius:99px;background:linear-gradient(90deg,var(--primary),#ffdd66);transform-origin:left;animation:fillbar 1.6s cubic-bezier(.2,.7,.3,1) both}
+.gbar:nth-child(1) i{width:100%}
+.gbar:nth-child(2) i{width:72%;animation-delay:.18s}
+.gbar:nth-child(3) i{width:48%;animation-delay:.34s}
+.gbar:nth-child(4) i{width:30%;animation-delay:.5s}
+@keyframes fillbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.gauge-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--border);padding:7px 13px;border-radius:999px}
+.chip svg{width:14px;height:14px;stroke:var(--primary)}
+.mini-plan{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;background:rgba(255,194,0,.07);border:1px solid rgba(255,194,0,.28);border-radius:16px;padding:16px 20px}
+.mini-plan .mp-name{font-weight:800;font-size:1.02rem}
+.mini-plan .mp-sub{font-size:.82rem;color:var(--muted)}
+.mini-plan .mp-price{font-size:1.3rem;font-weight:900;color:var(--primary);letter-spacing:-.02em}
+.float-card{position:absolute;left:-46px;bottom:34px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;animation:floaty 5s ease-in-out infinite}
+.float-card .fc-icon{width:40px;height:40px;border-radius:11px;background:rgba(255,194,0,.13);display:grid;place-items:center;flex:none}
+.float-card .fc-icon svg{width:20px;height:20px;stroke:var(--primary)}
+.float-card .fc-t{font-size:.82rem;font-weight:700}
+.float-card .fc-s{font-size:.74rem;color:var(--muted)}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+/* ---------- Stats ---------- */
+.stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,.018)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:34px 20px;text-align:center;border-left:1px solid var(--border)}
+.stat:first-child{border-left:none}
+.stat .v{font-size:clamp(1.6rem,2.6vw,2.15rem);font-weight:900;letter-spacing:-.03em;color:var(--primary)}
+.stat .l{font-size:.86rem;color:var(--muted);font-weight:500;margin-top:4px}
+/* ---------- Plans ---------- */
+.plans{padding:104px 0}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:34px 30px;display:flex;flex-direction:column;position:relative;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.plan-card:hover{transform:translateY(-6px);border-color:rgba(255,194,0,.45);box-shadow:0 30px 70px -28px rgba(0,0,0,.7)}
+.plan-card.featured{border-color:rgba(255,194,0,.6);background:linear-gradient(180deg,rgba(255,194,0,.07),var(--surface) 42%)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--primary);color:var(--primary-ink);font-size:11px;font-weight:900;letter-spacing:.1em;padding:6px 16px;border-radius:999px;box-shadow:0 8px 22px -6px rgba(255,194,0,.6)}
+.plan-name{font-size:1.35rem;font-weight:800;letter-spacing:-.02em}
+.plan-tagline{font-size:.88rem;color:var(--muted);margin:3px 0 20px}
+.plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.plan-price .p{font-size:2.6rem;font-weight:900;letter-spacing:-.04em;line-height:1}
+.plan-price .p small{font-size:1rem;font-weight:700;color:var(--muted);letter-spacing:0}
+.plan-was{font-size:.95rem;color:var(--muted);text-decoration:line-through}
+.plan-discount{display:inline-block;font-size:.78rem;font-weight:700;color:var(--primary);background:rgba(255,194,0,.1);border:1px solid rgba(255,194,0,.3);padding:4px 11px;border-radius:999px;margin:12px 0 20px}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:28px;flex:1}
+.plan-feats li{display:flex;gap:10px;font-size:.93rem;color:#CBD5E1}
+.plan-feats svg{width:18px;height:18px;stroke:var(--primary);flex:none;margin-top:2px}
+.plan-contract{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--border);padding-top:14px;margin-bottom:20px}
+.plan-card .btn{width:100%}
+/* ---------- Benefits ---------- */
+.benefits{padding:104px 0;background:rgba(255,255,255,.015);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ben-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px;transition:transform .25s ease,border-color .25s ease}
+.ben-card:hover{transform:translateY(-4px);border-color:rgba(255,194,0,.4)}
+.ben-icon{width:48px;height:48px;border-radius:13px;background:rgba(255,194,0,.11);border:1px solid rgba(255,194,0,.25);display:grid;place-items:center;margin-bottom:18px}
+.ben-icon svg{width:23px;height:23px;stroke:var(--primary)}
+.ben-card h3{font-size:1.08rem;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+.ben-card p{font-size:.92rem;color:var(--muted)}
+/* ---------- How it works ---------- */
+.steps{padding:104px 0}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:step}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;position:relative;overflow:hidden}
+.step-card::after{content:attr(data-num);position:absolute;right:-6px;top:-26px;font-size:7.5rem;font-weight:900;letter-spacing:-.05em;color:rgba(255,255,255,.035);pointer-events:none}
+.step-card .s-num{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--primary);color:var(--primary-ink);font-weight:900;font-size:1.05rem;margin-bottom:20px}
+.step-card h3{font-size:1.12rem;font-weight:800;margin-bottom:8px}
+.step-card p{font-size:.92rem;color:var(--muted)}
+/* ---------- FAQ ---------- */
+.faq{padding:104px 0;background:rgba(255,255,255,.015);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s}
+.faq-item.open{border-color:rgba(255,194,0,.45)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:var(--text);font-family:inherit;font-size:1rem;font-weight:700;text-align:left;padding:20px 22px;cursor:pointer}
+.faq-q .chev{width:20px;height:20px;stroke:var(--primary);flex:none;transition:transform .3s}
+.faq-item.open .chev{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{padding:0 22px 20px;color:var(--muted);font-size:.94rem}
+/* ---------- Final CTA ---------- */
+.final{padding:110px 0;overflow:hidden}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(700px 420px at 50% 110%, rgba(255,194,0,.15), transparent 70%);pointer-events:none}
+.final-inner{position:relative;background:linear-gradient(160deg,#141a2b,#0d1119);border:1px solid rgba(255,194,0,.3);border-radius:28px;padding:60px;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;box-shadow:0 40px 90px -40px rgba(0,0,0,.8)}
+.final h2{font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:900;letter-spacing:-.03em;line-height:1.12;margin-bottom:16px}
+.final .sub{color:var(--muted);font-size:1.06rem;margin-bottom:28px;max-width:480px}
+.final-points{display:flex;flex-direction:column;gap:13px}
+.final-points div{display:flex;gap:11px;font-size:.95rem;font-weight:600}
+.final-points svg{width:20px;height:20px;stroke:#4ade80;flex:none}
+.lead-form{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:30px;box-shadow:var(--shadow)}
+.lead-form h3{font-size:1.2rem;font-weight:800;margin-bottom:20px;letter-spacing:-.01em}
+.form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.form-row label{font-size:.82rem;font-weight:700;color:var(--muted);letter-spacing:.02em}
+.form-row input,.form-row select{background:rgba(255,255,255,.045);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:inherit;font-size:.98rem;padding:13px 15px;outline:none;transition:border-color .2s}
+.form-row input:focus,.form-row select:focus{border-color:var(--primary)}
+.form-row select option{background:var(--surface);color:var(--text)}
+.lead-form .btn{width:100%;margin-top:6px}
+.form-note{font-size:.78rem;color:var(--muted);text-align:center;margin-top:13px}
+/* ---------- Footer ---------- */
+.footer{border-top:1px solid var(--border);background:#06080d;padding:64px 0 0}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:44px;padding-bottom:48px}
+.footer .brand{margin-bottom:16px}
+.footer-tag{color:var(--muted);font-size:.92rem;max-width:300px}
+.footer h4{font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.footer ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.footer ul a{color:#c7cdd9;font-size:.92rem;transition:color .2s}
+.footer ul a:hover{color:var(--primary)}
+.footer-contact li{display:flex;gap:10px;align-items:flex-start;color:#c7cdd9;font-size:.92rem}
+.footer-contact svg{width:17px;height:17px;stroke:var(--primary);flex:none;margin-top:3px}
+.footer-bottom{border-top:1px solid var(--border);padding:22px 0}
+.footer-bottom-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.footer-disclaimer{font-size:.75rem;color:#6b7280;max-width:760px;margin-bottom:12px}
+.footer-copy{font-size:.8rem;color:#6b7280}
+.admin-link{font-size:.78rem;color:#4b5563;text-decoration:underline dotted}
+/* ---------- WA float ---------- */
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:200;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 14px 34px -8px rgba(37,211,102,.6);transition:transform .2s}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:30px;height:30px;fill:#fff}
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+/* ---------- Responsive ---------- */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:44px}
+  .float-card{left:auto;right:8px;bottom:8px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:none}
+  .stat:nth-child(n+3){border-top:1px solid var(--border)}
+  .plans-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+  .ben-grid,.steps-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+  .final-inner{grid-template-columns:1fr;padding:40px 28px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .hero{padding:56px 0 56px}
+  .hero-ctas .btn{width:100%}
+  .footer-grid{grid-template-columns:1fr}
+  .gauge-body{flex-direction:column;align-items:flex-start}
+  .hero-visual{margin-top:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ======= NAV ======= -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-badge" id="navLogo">M</span>
+      <span><span id="navBrand">Maxis Fibre</span> <span style="color:var(--muted);font-weight:600" id="navBrandSub">· Home Plans</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#plans">Plans</a>
+      <a href="#benefits">Why Maxis</a>
+      <a href="#steps">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#apply" class="btn btn-primary" id="navCta">Apply Now</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-badge"><span class="dot"></span><span id="heroBadge">Limited-time promo — from RM89/month</span></span>
+      <h1 id="heroTitle">Superfast home fibre. <span class="hl">From RM89/month.</span></h1>
+      <p class="hero-sub" id="heroSub">Unlimited quota, free installation and a free router — get Maxis Home Fibre in minutes. You apply, we do the rest.</p>
+      <div class="hero-ctas">
+        <a href="#apply" class="btn btn-primary btn-lg" id="heroCtaPrimary">Apply Now
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="btn btn-ghost btn-lg" id="heroCtaSecondary" target="_blank" rel="noopener">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+      <div class="hero-trust" id="heroTrust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> No paperwork</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free installation</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> 24/7 support</span>
+      </div>
+    </div>
+
+    <!-- Hero visual -->
+    <div class="hero-visual reveal">
+      <div class="gauge-card">
+        <div class="gauge-top">
+          <span class="gauge-label" id="gaugeLabel">Live speed test</span>
+          <span class="gauge-live"><span class="dot"></span> ONLINE</span>
+        </div>
+        <div class="gauge-body">
+          <div>
+            <div class="gauge-num"><span id="gaugeNum">1 Gbps</span></div>
+            <div class="gauge-unit" id="gaugeUnit">Fibre download speed</div>
+          </div>
+          <div class="gauge-bars">
+            <div class="gbar"><i></i></div>
+            <div class="gbar"><i></i></div>
+            <div class="gbar"><i></i></div>
+            <div class="gbar"><i></i></div>
+          </div>
+        </div>
+        <div class="gauge-meta">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg> <span id="chip1">Unlimited quota</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span id="chip2">Free router</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span id="chip3">Free install</span></span>
+        </div>
+      </div>
+      <div class="mini-plan">
+        <div>
+          <div class="mp-name" id="mpName">500Mbps Plan</div>
+          <div class="mp-sub" id="mpSub">FREE 2× Mesh WiFi included</div>
+        </div>
+        <div class="mp-price"><span id="mpPrice">RM149</span>/mo</div>
+      </div>
+      <div class="float-card">
+        <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 15.11a6 6 0 0 1 6.95 0M12 20h.01M2 8.82a15 15 0 0 1 20 0"/></svg></div>
+        <div><div class="fc-t" id="fcTitle">Whole-home coverage</div><div class="fc-s" id="fcSub">Strong WiFi in every room</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= STATS ======= -->
+<section class="stats">
+  <div class="container stats-grid" id="statsGrid"></div>
+</section>
+
+<!-- ======= PLANS ======= -->
+<section class="plans" id="plans">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Plans & Pricing</span>
+      <h2>Pick the speed that fits your home</h2>
+      <p>Every plan comes with unlimited quota, free installation and a free router. No surprises, no hidden fees.</p>
+    </div>
+    <div class="plans-grid" id="plansGrid"></div>
+  </div>
+</section>
+
+<!-- ======= BENEFITS ======= -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Why Maxis Fibre</span>
+      <h2>Built for the way Malaysia connects</h2>
+      <p>From streaming marathons to work-from-home meetings — everything just works.</p>
+    </div>
+    <div class="ben-grid" id="benGrid"></div>
+  </div>
+</section>
+
+<!-- ======= STEPS ======= -->
+<section class="steps" id="steps">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">How It Works</span>
+      <h2>Connected in 3 simple steps</h2>
+      <p>You just click — our team does the rest. No queues, no paperwork.</p>
+    </div>
+    <div class="steps-grid" id="stepsGrid"></div>
+  </div>
+</section>
+
+<!-- ======= FAQ ======= -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">FAQ</span>
+      <h2>Questions? Answered.</h2>
+      <p>Everything you need to know before you apply.</p>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ======= FINAL CTA ======= -->
+<section class="final" id="apply">
+  <div class="container">
+    <div class="final-inner reveal">
+      <div>
+        <h2 id="finalTitle">Ready to supercharge your internet?</h2>
+        <p class="sub" id="finalSub">Leave your details and our team will confirm coverage and finalise your application — usually within the hour.</p>
+        <div class="final-points">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> No payment needed now</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> We handle everything with Maxis</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Fast activation after coverage check</div>
+        </div>
+      </div>
+      <form class="lead-form" id="leadForm">
+        <h3 id="formTitle">Apply for Maxis Fibre</h3>
+        <div class="form-row">
+          <label for="lfName" id="formNameLabel">Full name</label>
+          <input type="text" id="lfName" placeholder="e.g. Ahmad bin Ali" required>
+        </div>
+        <div class="form-row">
+          <label for="lfPhone" id="formPhoneLabel">Mobile number</label>
+          <input type="tel" id="lfPhone" placeholder="e.g. 012-345 6789" required>
+        </div>
+        <div class="form-row">
+          <label for="lfPlan" id="formPlanLabel">Choose plan</label>
+          <select id="lfPlan"></select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" id="formButton">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span id="formButtonText">Apply Now via WhatsApp</span>
+        </button>
+        <p class="form-note" id="formNote">No payment needed now. We will contact you to confirm.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#top" class="brand">
+          <span class="brand-badge">M</span>
+          <span id="footBrand">Maxis Fibre</span>
+        </a>
+        <p class="footer-tag" id="footTag">Superfast Maxis Fibre for your home — applied online, installed fast.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#plans">Plans & Pricing</a></li>
+          <li><a href="#benefits">Why Maxis</a></li>
+          <li><a href="#steps">How It Works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Plans</h4>
+        <ul id="footPlans">
+          <li><a href="#plans">100Mbps — RM89/mo</a></li>
+          <li><a href="#plans">300Mbps — RM99/mo</a></li>
+          <li><a href="#plans">500Mbps — RM149/mo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="footPhone">+60 12-345 6789</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg><span id="footEmail">hello@example.com</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Mon–Sat, 9am – 6pm</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-disclaimer" id="footDisclaimer">Maxis, Maxis Fibre and related marks are trademarks of Maxis Broadband Sdn. Bhd. All plans, prices and promotions are subject to Maxis’ terms and conditions and may change without notice. This site is an independent application portal; final approval is at Maxis’ discretion.</p>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span class="footer-copy">© <span id="footYear">2026</span> <span id="footCopy">Maxis Fibre Landing</span>. All rights reserved.</span>
+        <a href="admin.html" class="admin-link">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ======= WA FLOAT ======= -->
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+/* ================= DATABASE ================= */
+var DB_KEY = 'maxis_fiber_db_v1';
+var DEFAULT_DB = {
+  settings: {
+    brand: 'Maxis Fibre',
+    brandSub: '· Home Plans',
+    waNumber: '60123456789',
+    waMessage: 'Hi! I want to apply for Maxis Fibre.',
+    phoneDisplay: '+60 12-345 6789',
+    email: 'hello@example.com'
+  },
+  hero: {
+    badge: 'Limited-time promo — from RM89/month',
+    title: 'Superfast home fibre. <span class="hl">From RM89/month.</span>',
+    subtitle: 'Unlimited quota, free installation and a free router — get Maxis Home Fibre in minutes. You apply, we do the rest.',
+    ctaPrimary: 'Apply Now',
+    ctaSecondary: 'Chat on WhatsApp',
+    trust: ['No paperwork', 'Free installation', '24/7 support'],
+    gaugeLabel: 'Live speed test',
+    gaugeNum: '1 Gbps',
+    gaugeUnit: 'Fibre download speed',
+    chip1: 'Unlimited quota', chip2: 'Free router', chip3: 'Free install',
+    mpName: '500Mbps Plan', mpSub: 'FREE 2× Mesh WiFi included', mpPrice: 'RM149',
+    fcTitle: 'Whole-home coverage', fcSub: 'Strong WiFi in every room'
+  },
+  stats: [
+    {value:'1 Gbps', label:'Top download speed'},
+    {value:'100%', label:'Unlimited quota'},
+    {value:'3 min', label:'Online application'},
+    {value:'24/7', label:'Maxis support'}
+  ],
+  plans: [
+    {name:'100Mbps', tagline:'Everyday browsing', price:'89', wasPrice:'99', contract:'24-month contract', discount:'Save RM10/mo for 24 months', features:['Unlimited quota','Free router','Free standard installation','Voice: pay-per-use'], badge:'', featured:false},
+    {name:'300Mbps', tagline:'Best value streaming', price:'99', wasPrice:'139', contract:'36-month contract', discount:'Save RM40/mo for 36 months', features:['Unlimited quota','Free router','Free standard installation','Voice: pay-per-use'], badge:'BEST VALUE', featured:true},
+    {name:'500Mbps', tagline:'Power for the whole home', price:'149', wasPrice:'159', contract:'24-month contract', discount:'3 months free + save RM10/mo', features:['Unlimited quota','FREE 2× Mesh WiFi','Free router','Free standard installation'], badge:'MOST POPULAR', featured:true}
+  ],
+  benefits: [
+    {icon:'zap', title:'Superfast speeds', desc:'Up to 1Gbps download — stream, game and work from home without lag.'},
+    {icon:'infinity', title:'Unlimited quota', desc:'No data caps, no throttling surprises. Use it as much as you want.'},
+    {icon:'wrench', title:'Free installation', desc:'Standard installation is free. Our team handles everything for you.'},
+    {icon:'wifi', title:'Free router + Mesh', desc:'Free router on every plan; 2× Mesh WiFi units on the 500Mbps plan.'},
+    {icon:'phone', title:'Postpaid discount', desc:'Existing Maxis postpaid users save even more — up to RM90/month.'},
+    {icon:'shield', title:'Trusted network', desc:'Backed by Maxis — one of Malaysia’s most reliable fibre networks.'}
+  ],
+  steps: [
+    {title:'Apply online', desc:'Fill in the form or WhatsApp us your details. Takes under 3 minutes.'},
+    {title:'We verify & confirm', desc:'Our team checks coverage and confirms your plan and installation slot.'},
+    {title:'Get connected', desc:'Maxis installs your fibre. Start streaming the same week.'}
+  ],
+  faqs: [
+    {q:'Is there a contract?', a:'Yes — home fibre plans come with a 24- or 36-month contract. Promotional pricing applies for the full contract period.'},
+    {q:'What is the early termination penalty?', a:'Early termination is charged at the original monthly fee × remaining months, or RM500 — whichever is higher.'},
+    {q:'Is installation really free?', a:'Yes, standard installation is free on all residential plans. Non-standard work may be quoted separately.'},
+    {q:'I’m a Maxis postpaid user. Can I save more?', a:'Yes — Maxis postpaid customers enjoy extra discounts, up to RM90/month on the 1Gbps plan.'},
+    {q:'Is a phone line included?', a:'Plans are available with pay-per-use voice or an unlimited domestic call line add-on at a small monthly top-up.'},
+    {q:'How fast can I get connected?', a:'Once coverage is confirmed, installation is usually scheduled within 1–3 working days.'}
+  ],
+  cta: {
+    title: 'Ready to supercharge your internet?',
+    subtitle: 'Leave your details and our team will confirm coverage and finalise your application — usually within the hour.',
+    formTitle: 'Apply for Maxis Fibre',
+    nameLabel: 'Full name', phoneLabel: 'Mobile number', planLabel: 'Choose plan',
+    button: 'Apply Now via WhatsApp',
+    note: 'No payment needed now. We will contact you to confirm.'
+  },
+  footer: {
+    tagline: 'Superfast Maxis Fibre for your home — applied online, installed fast.',
+    disclaimer: 'Maxis, Maxis Fibre and related marks are trademarks of Maxis Broadband Sdn. Bhd. All plans, prices and promotions are subject to Maxis’ terms and conditions and may change without notice. This site is an independent application portal; final approval is at Maxis’ discretion.',
+    copyright: 'Maxis Fibre Landing'
+  },
+  colors: {
+    primary:'#FFC200', primaryInk:'#0B0D12', bg:'#07090F', surface:'#0F1420',
+    text:'#F5F7FA', muted:'#98A2B3', border:'rgba(255,255,255,0.08)'
+  }
+};
+
+function getDB(){
+  try{ var s = JSON.parse(localStorage.getItem(DB_KEY));
+    if(s && s.settings) return s;
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_DB));
+}
+
+/* ================= HELPERS ================= */
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function waLink(num, msg){
+  return 'https://wa.me/' + String(num).replace(/[^0-9]/g,'') + '?text=' + encodeURIComponent(msg);
+}
+function updateColors(c){
+  var r = document.documentElement.style;
+  r.setProperty('--primary', c.primary);
+  r.setProperty('--primary-ink', c.primaryInk);
+  r.setProperty('--bg', c.bg);
+  r.setProperty('--surface', c.surface);
+  r.setProperty('--text', c.text);
+  r.setProperty('--muted', c.muted);
+  r.setProperty('--border', c.border);
+}
+
+/* ================= ICONS ================= */
+var ICONS = {
+  zap:'<path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>',
+  infinity:'<path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4z"/>',
+  wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  wifi:'<path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 15.11a6 6 0 0 1 6.95 0M12 20h.01M2 8.82a15 15 0 0 1 20 0"/>',
+  phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  check:'<path d="M20 6L9 17l-5-5"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>'
+};
+function iconSvg(name, cls){
+  return '<svg class="' + (cls||'') + '" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[name]||ICONS.check) + '</svg>';
+}
+
+/* ================= RENDER ================= */
+function setText(id, val){ var el = document.getElementById(id); if(el) el.textContent = val; }
+function setHtml(id, val){ var el = document.getElementById(id); if(el) el.innerHTML = val; }
+
+function applyWaLinks(db){
+  var num = db.settings.waNumber;
+  var base = db.settings.waMessage;
+  var sec = document.getElementById('heroCtaSecondary');
+  if(sec) sec.href = waLink(num, base);
+  var f = document.getElementById('waFloat');
+  if(f) f.href = waLink(num, base);
+}
+
+function renderAll(){
+  var db = getDB();
+  updateColors(db.colors);
+
+  /* settings */
+  setText('navBrand', db.settings.brand);
+  setText('navBrandSub', db.settings.brandSub || '');
+  setText('footBrand', db.settings.brand);
+  setText('footPhone', db.settings.phoneDisplay);
+  setText('footEmail', db.settings.email);
+  document.title = db.settings.brand + ' — Superfast Home Fibre from RM89/month';
+
+  /* hero */
+  setText('heroBadge', db.hero.badge);
+  setHtml('heroTitle', db.hero.title);
+  setText('heroSub', db.hero.subtitle);
+  setText('heroCtaPrimary', db.hero.ctaPrimary);
+  setText('heroCtaSecondary', db.hero.ctaSecondary);
+  var trust = db.hero.trust.map(function(t){
+    return '<span>' + iconSvg('check') + esc(t) + '</span>';
+  }).join('');
+  setHtml('heroTrust', trust);
+  setText('gaugeLabel', db.hero.gaugeLabel);
+  setText('gaugeNum', db.hero.gaugeNum);
+  setText('gaugeUnit', db.hero.gaugeUnit);
+  setText('chip1', db.hero.chip1); setText('chip2', db.hero.chip2); setText('chip3', db.hero.chip3);
+  setText('mpName', db.hero.mpName); setText('mpSub', db.hero.mpSub); setText('mpPrice', db.hero.mpPrice);
+  setText('fcTitle', db.hero.fcTitle); setText('fcSub', db.hero.fcSub);
+
+  /* stats */
+  setHtml('statsGrid', db.stats.map(function(s){
+    return '<div class="stat"><div class="v">' + esc(s.value) + '</div><div class="l">' + esc(s.label) + '</div></div>';
+  }).join(''));
+
+  /* plans */
+  setHtml('plansGrid', db.plans.map(function(p, i){
+    var badgeHtml = p.badge ? '<div class="plan-badge">' + esc(p.badge) + '</div>' : '';
+    var feats = (p.features||[]).map(function(f){
+      return '<li>' + iconSvg('check') + '<span>' + esc(f) + '</span></li>';
+    }).join('');
+    var waMsg = 'Hi! I want to apply for Maxis Fibre ' + p.name + ' plan (' + (p.discount||'') + '). Please assist.';
+    return '<div class="plan-card' + (p.featured ? ' featured' : '') + '">' + badgeHtml +
+      '<div class="plan-name">' + esc(p.name) + '</div>' +
+      '<div class="plan-tagline">' + esc(p.tagline) + '</div>' +
+      '<div class="plan-price"><span class="p">RM' + esc(p.price) + '<small>/month</small></span>' +
+      (p.wasPrice ? '<span class="plan-was">RM' + esc(p.wasPrice) + '</span>' : '') + '</div>' +
+      '<span class="plan-discount">' + esc(p.discount) + '</span>' +
+      '<ul class="plan-feats">' + feats + '</ul>' +
+      '<div class="plan-contract">' + esc(p.contract) + '</div>' +
+      '<a class="btn ' + (p.featured ? 'btn-primary' : 'btn-ghost') + '" href="' + waLink(db.settings.waNumber, waMsg) + '" target="_blank" rel="noopener">Apply Now</a>' +
+      '</div>';
+  }).join(''));
+
+  /* benefits */
+  setHtml('benGrid', db.benefits.map(function(b){
+    return '<div class="ben-card">' +
+      '<div class="ben-icon">' + iconSvg(b.icon) + '</div>' +
+      '<h3>' + esc(b.title) + '</h3>' +
+      '<p>' + esc(b.desc) + '</p></div>';
+  }).join(''));
+
+  /* steps */
+  setHtml('stepsGrid', db.steps.map(function(s, i){
+    return '<div class="step-card" data-num="0' + (i+1) + '">' +
+      '<span class="s-num">0' + (i+1) + '</span>' +
+      '<h3>' + esc(s.title) + '</h3>' +
+      '<p>' + esc(s.desc) + '</p></div>';
+  }).join(''));
+
+  /* faqs */
+  setHtml('faqList', db.faqs.map(function(f, i){
+    return '<div class="faq-item" id="faq' + i + '">' +
+      '<button class="faq-q" onclick="toggleFaq(' + i + ')">' + esc(f.q) +
+      '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>' +
+      '<div class="faq-a"><p>' + esc(f.a) + '</p></div></div>';
+  }).join(''));
+
+  /* cta band */
+  setText('finalTitle', db.cta.title);
+  setText('finalSub', db.cta.subtitle);
+  setText('formTitle', db.cta.formTitle);
+  setText('formNameLabel', db.cta.nameLabel);
+  setText('formPhoneLabel', db.cta.phoneLabel);
+  setText('formPlanLabel', db.cta.planLabel);
+  setText('formButtonText', db.cta.button);
+  setText('formNote', db.cta.note);
+  var sel = document.getElementById('lfPlan');
+  if(sel && db.plans.length){
+    sel.innerHTML = db.plans.map(function(p){
+      return '<option value="' + esc(p.name) + '">' + esc(p.name) + ' — RM' + esc(p.price) + '/mo</option>';
+    }).join('');
+  }
+
+  /* footer */
+  setText('footTag', db.footer.tagline);
+  setText('footDisclaimer', db.footer.disclaimer);
+  setText('footCopy', db.footer.copyright);
+  setHtml('footPlans', db.plans.map(function(p){
+    return '<li><a href="#plans">' + esc(p.name) + ' — RM' + esc(p.price) + '/mo</a></li>';
+  }).join(''));
+
+  applyWaLinks(db);
+  observeReveals();
+}
+
+/* ================= FAQ ================= */
+function toggleFaq(i){
+  var item = document.getElementById('faq' + i);
+  if(!item) return;
+  var open = item.classList.contains('open');
+  var list = document.querySelectorAll('.faq-item.open');
+  list.forEach(function(el){ el.classList.remove('open'); el.querySelector('.faq-a').style.maxHeight = null; });
+  if(!open){
+    item.classList.add('open');
+    var a = item.querySelector('.faq-a');
+    a.style.maxHeight = a.scrollHeight + 'px';
+  }
+}
+
+/* ================= REVEAL ================= */
+var io;
+function observeReveals(){
+  if(!('IntersectionObserver' in window)){ document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); return; }
+  if(!io){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold: 0.12});
+  }
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ io.observe(el); });
+}
+
+/* ================= LEAD FORM ================= */
+document.getElementById('leadForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var db = getDB();
+  var name = document.getElementById('lfName').value.trim();
+  var phone = document.getElementById('lfPhone').value.trim();
+  var plan = document.getElementById('lfPlan').value;
+  var msg = 'Hi! I want to apply for Maxis Fibre.\nName: ' + name + '\nPhone: ' + phone + '\nPlan: ' + plan + '\nPlease assist me with the application.';
+  window.open(waLink(db.settings.waNumber, msg), '_blank');
+  this.querySelector('.btn').textContent = '✓ Sent — check WhatsApp';
+  setTimeout(function(){ document.getElementById('formButtonText').textContent = db.cta.button; }, 5000);
+});
+
+/* ================= NAV SCROLL ================= */
+window.addEventListener('scroll', function(){
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+/* ================= LIVE UPDATE FROM ADMIN ================= */
+window.addEventListener('storage', function(e){
+  if(e.key === DB_KEY){ renderAll(); }
+});
+function refreshPage(){ renderAll(); }
+
+/* ================= INIT ================= */
+renderAll();
+document.getElementById('footYear').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
