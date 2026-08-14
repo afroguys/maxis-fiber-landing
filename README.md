@@ -56,6 +56,6 @@ Any static host works: GitHub Pages, Netlify, Vercel, or the user's own Pi (serv
 
 ## Notes
 
-- Prices/plans scraped from the reference agent page (applymaxisfiber.com) — verify current Maxis pricing before launch.
+- Prices/plans scraped from the reference agent page — verify current Maxis pricing before launch.
 - Trademarks belong to Maxis Broadband Sdn. Bhd.; the footer carries a standard disclaimer.
 - Fonts: Inter (Google Fonts). Zero dependencies, zero build step.
