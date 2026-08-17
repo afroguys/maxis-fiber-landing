@@ -26,7 +26,7 @@ Premium, dark-themed, conversion-focused landing page for **Maxis Home Fibre** (
 - **Sticky nav** — brand, section links, Apply Now CTA
 - **Hero** — promo badge, bold H1 with yellow highlight, subheadline, dual CTAs (Apply Now + WhatsApp), trust checkmarks, live-speed gauge card, floating whole-home coverage card
 - **Stats strip** — 1 Gbps / 100% unlimited / 3 min apply / 24/7 support
-- **Plans** — 3 pricing cards (100Mbps RM89, 300Mbps RM99 ★Best Value, 500Mbps RM149 ★Most Popular with FREE 2× Mesh WiFi) — real prices from the Maxis EasyUni5 page
+- **Plans** — 3 pricing cards (100Mbps RM89, 300Mbps RM99 ★Best Value, 500Mbps RM149 ★Most Popular with FREE 2× Mesh WiFi) 
 - **Benefits** — 6 feature cards (speed, unlimited, free install, router+mesh, postpaid discount, trusted network)
 - **How It Works** — 3 steps
 - **FAQ** — animated accordion (contract, penalty, installation, postpaid discount, phone line, activation time)
